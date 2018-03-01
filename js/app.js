@@ -85,16 +85,16 @@ $('document').ready(function () {
         var sixHoursHs = value.data.toFixed(2);
         var getHasrate = `https://api.nanopool.org/v1/eth/approximated_earnings/${sixHoursHs}`;
         var req7 = $.getJSON(getHasrate,function (val) {
-            //const {day, week, month} = val.data;
-            $('#coinDay').html(val.data.day.coins.toFixed(3));
-            $('#coinWeek').html(val.data.week.coins.toFixed(3));
-            $('#coinMonth').html(val.data.month.coins.toFixed(3));
-            $('#euroDay').html(val.data.day.euros.toFixed(2)+' €');
-            $('#euroWeek').html(val.data.week.euros.toFixed(2)+' €');
-            $('#euroMonth').html(val.data.month.euros.toFixed(2)+' €');
-            $('#usdDay').html(val.data.day.dollars.toFixed(2)+' $');
-            $('#usdWeek').html(val.data.week.dollars.toFixed(2)+' $');
-            $('#usdMonth').html(val.data.month.dollars.toFixed(2)+' $');
+            const {day, week, month} = val.data;
+            $('#coinDay').html(day.coins.toFixed(3));
+            $('#coinWeek').html(week.coins.toFixed(3));
+            $('#coinMonth').html(month.coins.toFixed(3));
+            $('#euroDay').html(day.euros.toFixed(2)+' €');
+            $('#euroWeek').html(week.euros.toFixed(2)+' €');
+            $('#euroMonth').html(month.euros.toFixed(2)+' €');
+            $('#usdDay').html(day.dollars.toFixed(2)+' $');
+            $('#usdWeek').html(week.dollars.toFixed(2)+' $');
+            $('#usdMonth').html(month.dollars.toFixed(2)+' $');
         });
 
     });
