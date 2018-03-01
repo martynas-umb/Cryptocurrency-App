@@ -1,0 +1,43 @@
+.container{
+    margin: auto;
+    text-align: center;
+    border-radius: 15px;
+    width:70%;
+    background-color: ghostwhite;
+}
+
+.input-group{
+    margin-top: 20px;
+}
+#btns{
+    margin-top: 30px;
+}
+#btns button{
+    width: 120px;
+}
+.row{
+    margin-top: 15px;
+}
+.ratesItems {
+    border: 2px solid white;
+    border-radius: 10px;
+    margin: 10px 30px;
+}
+.title{
+    font-weight: 700;
+    font-size: 17px;
+}
+.earnings {
+    margin-bottom: 20px;
+}
+.mid {
+    margin-bottom: 20px;
+}
+.rates{
+    font-weight: 300;
+    font-size: 20px;
+}
+#currentHs,#lastRep{
+    margin-top: 22px;
+}
+
