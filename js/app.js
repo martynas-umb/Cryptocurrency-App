@@ -56,36 +56,25 @@ $('#save').click(function () {
 
 // POOL URLS
 //worker
-var worker = `https://api.nanopool.org/v1/etc/workers/${stored[0].adress}`;
+var worker = `https://api.nanopool.org/v1/eth/workers/${stored[0].adress}`;
 //Worker - Current hashrate
-var wCurrentHs = `https://api.nanopool.org/v1/etc/hashrate/${stored[0].adress}`;
+var wCurrentHs = `https://api.nanopool.org/v1/eth/hashrate/${stored[0].adress}`;
 //Worker - 6 Hours average hasrate
-var wSixHoursHs = `https://api.nanopool.org/v1/etc/avghashratelimited/${stored[0].adress}/6`;
+var wSixHoursHs = `https://api.nanopool.org/v1/eth/avghashratelimited/${stored[0].adress}/6`;
 //Worker - Last Reported Hasrate
-var wLastHs = `https://api.nanopool.org/v1/etc/reportedhashrate/${stored[0].adress}`;
+var wLastHs = `https://api.nanopool.org/v1/eth/reportedhashrate/${stored[0].adress}`;
 //Account balance
-var balance = `https://api.nanopool.org/v1/etc/balance/${stored[0].adress}`;
+var balance = `https://api.nanopool.org/v1/eth/balance/${stored[0].adress}`;
 //Hasrate Chart
-var hashChart = `https://api.nanopool.org/v1/etc/hashratechart/${stored[0].adress}`;
+var hashChart = `https://api.nanopool.org/v1/eth/hashratechart/${stored[0].adress}`;
+//Minimum payout
+var minPayout = `https://api.nanopool.org/v1/eth/usersettings/${stored[0].adress}`;
 
-//Change pool urls
-/*$('#eth').click(function () {
-    worker = `https://api.nanopool.org/v1/eth/workers/${stored[0].adress}`;
-//Worker - Current hashrate
-    wCurrentHs = `https://api.nanopool.org/v1/eth/hashrate/${stored[0].adress}`;
-//Worker - 6 Hours average hasrate
-    wSixHoursHs = `https://api.nanopool.org/v1/eth/avghashratelimited/${stored[0].adress}/6`;
-//Worker - Last Reported Hasrate
-    wLastHs = `https://api.nanopool.org/v1/eth/reportedhashrate/${stored[0].adress}`;
-//Account balance
-    balance = `https://api.nanopool.org/v1/eth/balance/${stored[0].adress}`;
-});
-*/
+//ETH PRICE URL
+var ethPrice = `https://api.coinmarketcap.com/v1/ticker/?convert=EUR&limit=3`;
+
 
 // GET JSON DATA
-    //Add data to view
-
-
 $('document').ready(function () {
 
     var req1 = $.getJSON(wCurrentHs, function(value) {
@@ -94,7 +83,7 @@ $('document').ready(function () {
     var req2 = $.getJSON(wSixHoursHs, function(value) {
         $('#sixHr').html(value.data.toFixed(2)+' Mh/s');
         var sixHoursHs = value.data.toFixed(2);
-        var getHasrate = `https://api.nanopool.org/v1/etc/approximated_earnings/${sixHoursHs}`;
+        var getHasrate = `https://api.nanopool.org/v1/eth/approximated_earnings/${sixHoursHs}`;
         var req7 = $.getJSON(getHasrate,function (val) {
             //const {day, week, month} = val.data;
             $('#coinDay').html(val.data.day.coins.toFixed(3));
@@ -115,7 +104,10 @@ $('document').ready(function () {
     });
 
     var req4 = $.getJSON(balance, function(value) {
-        var progress = value.data*100/0.5;
+            // Get min payout
+            var req8 = $.getJSON(minPayout, function (val) {
+
+        var progress = value.data*100/val.data.payout;
         var result = progress.toFixed(0);
         //Add hover effect with data function
         bar1.set(result);
@@ -131,6 +123,7 @@ $('document').ready(function () {
                 }
             });
         } );
+            });
         $('#open-event').attr('title','Curent balance ' + value.data.toFixed(8));
     });
 
@@ -157,7 +150,14 @@ $('document').ready(function () {
                     labels: [
                     ]
                 },
-                options: {}
+                options: {
+                    legend:{
+                        display: false,
+                        labels:{
+                            padding: 2
+                        }
+                    }
+                }
             });
             //Dynamicly add content from json to chart
             $(value.data).each(function (i) {
@@ -174,6 +174,17 @@ $('document').ready(function () {
             });
 
 
+        });
+        var req7 = $.getJSON(ethPrice, function(value) {
+            function financial(x) {
+                return Number.parseFloat(x).toFixed(2);
+            }
+            var priceEur = value[1].price_eur;
+            var priceUSD = value[1].price_usd;
+            var priceBTC = value[1].price_btc;
+            $('#priceEur').html(financial(priceEur)+" €");
+            $('#priceUSD').html(financial(priceUSD)+" $");
+            $('#priceBtc').html(priceBTC+" BTC");
         });
         //ON RESIZE CHANGE CHART SIZE ATTRIBUTES
     $(window).on('resize', function(){

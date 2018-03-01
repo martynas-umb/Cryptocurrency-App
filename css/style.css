@@ -15,6 +15,12 @@
 #btns button{
     width: 120px;
 }
+#eprice{
+    margin-bottom: 20px;
+}
+/*#priceTable{*/
+    /*border: 2px solid grey;*/
+/*}*/
 .row{
     margin-top: 15px;
 }

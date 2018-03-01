@@ -54,7 +54,7 @@
     </div>
     </div>
     <div class="row justify-content-center" id="payout">
-        <div class="col-sm-6 payout">
+        <div class="col-sm-4 payout">
             <div class="title mid" id="open-event">Balance to Payout</div>
             <div class="ldBar label-center"
                  style="width:50%;height:50%;margin:auto"
@@ -63,7 +63,26 @@
                  id="myItem1"
             ></div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-4">
+            <div class="title" id="eprice">ETH PRICE</div>
+            <table class="table table-sm" id="priceTable">
+                <tbody>
+                <tr>
+                    <th scope="row">EUR</th>
+                    <td id="priceEur"></td>
+                </tr>
+                <tr>
+                    <th scope="row">USD</th>
+                    <td id="priceUSD"></td>
+                </tr>
+                <tr>
+                    <th scope="row">BTC</th>
+                    <td id="priceBtc"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-sm-4">
             <div class="title mid">Current miner Hashrate</div>
             <canvas id="myChart" height="25vw" width="85vw"></canvas>
         </div>
