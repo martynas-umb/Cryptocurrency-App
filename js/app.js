@@ -5,10 +5,7 @@
     var pool;
 
 //Add input placeholder
-
-
-
-
+$("#inp").attr("placeholder", localStorage.getItem("content"));
 // Coppy input value and show copied content
     copy.addEventListener('click', function () {
         inp.select();
@@ -29,8 +26,6 @@
         adress=inp.value;
         localStorage.setItem("content", inp.value);
     });
-
-
 
 // On save click, add input value to localstorage (wallet);
 /*
@@ -54,23 +49,20 @@
 
 var adress = localStorage.getItem('content');
 if(adress){
-    pool = {
-        worker:`https://api.nanopool.org/v1/eth/workers/${adress}`,
-        currentHS:`https://api.nanopool.org/v1/eth/hashrate/${adress}`,
-        sixHoursHs : `https://api.nanopool.org/v1/eth/avghashratelimited/${adress}/6`,
-        lastHs : `https://api.nanopool.org/v1/eth/reportedhashrate/${adress}`,
-        balance : `https://api.nanopool.org/v1/eth/balance/${adress}`,
-        hashChart : `https://api.nanopool.org/v1/eth/hashratechart/${adress}`,
-        minPayout : `https://api.nanopool.org/v1/eth/usersettings/${adress}`,
-        ethPrice : `https://api.coinmarketcap.com/v1/ticker/?convert=EUR&limit=3`
-    };
-    loadData();
+    getPool(adress)
 }else{
     adress=''
 }
 
 $('#save').click(function () {
     adress=inp.value;
+
+    console.warn(adress);
+    localStorage.setItem("content", inp.value);
+});
+
+
+function getPool(adress) {
     pool = {
         worker:`https://api.nanopool.org/v1/eth/workers/${adress}`,
         currentHS:`https://api.nanopool.org/v1/eth/hashrate/${adress}`,
@@ -81,19 +73,9 @@ $('#save').click(function () {
         minPayout : `https://api.nanopool.org/v1/eth/usersettings/${adress}`,
         ethPrice : `https://api.coinmarketcap.com/v1/ticker/?convert=EUR&limit=3`
     };
-    console.warn(adress);
-    localStorage.setItem("content", inp.value);
     loadData();
-});
-
-
-
-
-
-
-
+}
 // GET JSON DATA
-
         function loadData() {
             console.log(pool.currentHS);
             $.getJSON(pool.currentHS, function (value) {
